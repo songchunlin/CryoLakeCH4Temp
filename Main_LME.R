@@ -87,6 +87,9 @@ mlm_dch4_L_1 <- lmer(log(Diff_CH4_mmolm2d) ~ ikt + (1|Site_ID) , data = Lakedat2
 mlm_dch4_L_2 <- lmer(log(Diff_CH4_mmolm2d) ~ ikt + (ikt|Site_ID) , data = Lakedat2_filtered[which(Lakedat2_filtered$Diff_CH4_mmolm2d>0.0001),], REML = FALSE)
 summary(mlm_dch4_L_2)
 anova(mlm_dch4_L_2, mlm_dch4_L_2) # model 2 has lower  AIC
+plot(mlm_dch4_L_2)
+qqnorm(resid(mlm_dch4_L_2))
+qqline(resid(mlm_dch4_L_2))
 
 #### Size bins------
 mlm_dch4_Lsp_1 <- lmer(log(Diff_CH4_mmolm2d) ~ ikt + (1|Site_ID) , data = Lakedat2_filtered[which(Lakedat2_filtered$Diff_CH4_mmolm2d > 0.0001 & Lakedat2_filtered$sizeclass == "small_pond"),], REML = FALSE) # not enough obs. for model 2
@@ -114,7 +117,10 @@ mlm_ech4_L_1 <- lmer(log(Eb_CH4_mmolm2d) ~ ikt + (1|Site_ID) , data = Lakedat2_f
 mlm_ech4_L_2 <- lmer(log(Eb_CH4_mmolm2d) ~ ikt + (ikt|Site_ID) , data = Lakedat2_filtered[which(Lakedat2_filtered$Eb_CH4_mmolm2d>0.0001),], REML = FALSE) # model 2
 summary(mlm_ech4_L_2)
 anova(mlm_ech4_L_1, mlm_ech4_L_2) # model 2 has lower  AIC
-
+plot(mlm_ech4_L_2)
+qqnorm(resid(mlm_ech4_L_2))
+qqline(resid(mlm_ech4_L_2))
+                                   
 #### Size bins------
 mlm_ech4_Lsp_1 <- lmer(log(Eb_CH4_mmolm2d) ~ ikt + (1|Site_ID) , data = Lakedat2_filtered[which(Lakedat2_filtered$Eb_CH4_mmolm2d > 0.0001 & Lakedat2_filtered$sizeclass == "small_pond"),], REML = FALSE)
 
