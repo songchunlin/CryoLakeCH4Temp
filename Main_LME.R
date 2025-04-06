@@ -173,6 +173,35 @@ print(tidy_results_D_depth)
 write.csv(tidy_results_D_depth, "lmer_ech4_depth_lake.csv")
 
 ## Visualization ------
+### Ea for each site with linear models-----
+site_Ea_dch4_L <-  Lakedat2_filtered %>%
+  filter(Diff_CH4_mmolm2d > 0.0001) %>% 
+  drop_na(ikt) %>% 
+  group_by(Site_ID) %>%
+  do(tidy(lm(log(Diff_CH4_mmolm2d) ~ ikt, data = .))) %>%
+  filter(term == "ikt") %>%
+  select(Site_ID, slope = estimate, p_value=p.value)
+site_Ea_dch4_L <- as.data.frame(site_Ea_dch4_L) %>% drop_na(slope)
+
+
+site_Ea_ech4_L <-  Lakedat2_filtered %>%
+  filter(Eb_CH4_mmolm2d > 0.0001) %>% 
+  drop_na(ikt) %>% 
+  group_by(Site_ID) %>%
+  do(tidy(lm(log(Eb_CH4_mmolm2d) ~ ikt, data = .))) %>%
+  filter(term == "ikt") %>%
+  select(Site_ID, slope = estimate, p_value=p.value)
+site_Ea_ech4_L <- as.data.frame(site_Ea_ech4_L) %>% drop_na(slope)
+
+site_Ea_tch4_L <-  Lakedat2_filtered %>%
+  filter(Total_CH4_mmolm2d > 0.0001) %>% 
+  drop_na(ikt) %>% 
+  group_by(Site_ID) %>%
+  do(tidy(lm(log(Total_CH4_mmolm2d) ~ ikt, data = .))) %>%
+  filter(term == "ikt") %>%
+  select(Site_ID, slope = estimate, p_value=p.value)
+site_Ea_tch4_L <- as.data.frame(site_Ea_tch4_L) %>% drop_na(slope)
+
 ### Figure 1 ------
 
 L_dch4_t <- Lakedat2_filtered %>% 
