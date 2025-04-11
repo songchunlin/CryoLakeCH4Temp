@@ -16,6 +16,8 @@ library(viridis)
 library(cowplot)
 library(grid)
 library(gridExtra)
+library(svglite)
+
 
 # Data read and preprocessing ------
 ## download data file "CryoLake.xlsx" from https://doi.org/10.5281/zenodo.11054180
