@@ -1,6 +1,6 @@
 # Set working directory and load libraries ------
-setwd("~/Documents/Papers/CryoAquaGHG/Data")
-dir <- "~/Documents/Papers/CryoAquaGHG"
+setwd("~/Documents/CryoAquaGHG/Data")
+dir <- "~/Documents/CryoAquaGHG" # Change this to your own directory
 library(readxl)
 library(dplyr)
 library(tidyverse)
@@ -20,7 +20,7 @@ library(svglite)
 
 
 # Data read and preprocessing ------
-## download data file "CryoLake.xlsx" from https://doi.org/10.5281/zenodo.11054180
+## download data file "CryoLake.xlsx" from https://doi.org/10.5281/zenodo.11054180 to your working directory
 Lsites <- read_excel(paste(dir,'Data', 'CryoLake.xlsx',sep = '/'), sheet = 'Sites', col_types = c("numeric", "numeric", "text", "text", "text", "text", "text", "numeric","text", "text", "text", "text","numeric","numeric","text","numeric","text","numeric","numeric","numeric","numeric","text","numeric","numeric","numeric","text")) 
 nrow(Lsites) # 1697 rows
 length(unique(Lsites$Site_ID))# 1585
