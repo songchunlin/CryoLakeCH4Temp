@@ -143,9 +143,14 @@ print(tidy_results_E)
 write.csv(tidy_results_E, paste(dir, 'Output', 'Tables', 'lmer_ech4_temp_lake.csv', sep = '/'))
 
 ### tCH4-----
+mlm_tch4_L_1 <- lmer(log(Total_CH4_mmolm2d) ~ ikt + (1|Site_ID) , data = Lakedat2_filtered[which(Lakedat2_filtered$Total_CH4_mmolm2d>0.0001),], REML = FALSE)
 mlm_tch4_L_2 <- lmer(log(Total_CH4_mmolm2d) ~ ikt + (ikt|Site_ID) , data = Lakedat2_filtered[which(Lakedat2_filtered$Total_CH4_mmolm2d>0.0001),], REML = FALSE)
+anova(mlm_tch4_L_1, mlm_tch4_L_2) # model 2 has lower  AIC
 summary(mlm_tch4_L_2)
 confint(mlm_tch4_L_2)
+plot(mlm_tch4_L_2)
+qqnorm(resid(mlm_tch4_L_2))
+qqline(resid(mlm_tch4_L_2))
 
 
 ## LME-based apparent activation energy for each depth group-----
@@ -229,15 +234,15 @@ L_dch4_t <- Lakedat2_filtered %>%
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 pds_dch4 <- site_Ea_dch4_L %>%
-  ggplot(aes(x=slope))+
+  ggplot(aes(y=slope))+
   geom_density(color="brown", fill="#f0be89", alpha=0.6) +
-  geom_vline(aes(xintercept = 0), linetype="dashed") +
-  xlab("Apparent activation energy (eV)")+
-  ylab("Kernel density") +
-  annotate(geom = "text", x=7, y = 0.4, label=expression('Diffusive C'*H[4]), size=4) +
-  scale_x_continuous(breaks = seq(from = -5, to = 10, by = 1), limits = c(-5,10)) +
+  geom_hline(aes(yintercept = 0), linetype="dashed") +
+  ylab("Apparent activation energy (eV)")+
+  xlab("Kernel density") +
+  annotate(geom = "text", x=0.3, y = 7, label=expression('Diffusive C'*H[4]), size=4) +
+  scale_y_continuous(breaks = seq(from = -5, to = 10, by = 1), limits = c(-5,10)) +
   theme_linedraw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), plot.margin = unit(c(1.3, 0.1, 0.3, 0.1), "cm"))
 
 L_ech4_t <- Lakedat2_filtered %>% 
   filter(Eb_CH4_mmolm2d > 0) %>% 
@@ -256,15 +261,15 @@ L_ech4_t <- Lakedat2_filtered %>%
   theme( panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 pds_ech4 <- site_Ea_ech4_L %>%
-  ggplot(aes(x=slope))+
+  ggplot(aes(y=slope))+
   geom_density(color="darkblue", fill="#3d85c6", alpha=0.6) +
-  geom_vline(aes(xintercept = 0), linetype="dashed") +
-  xlab("Apparent activation energy (eV)")+
-  ylab("Kernel density") +
-  annotate(geom = "text", x=7, y = 0.3, label=expression('Ebullitive C'*H[4]), size=4) +
-  scale_x_continuous(breaks = seq(from = -5, to = 10, by = 1), limits = c(-5,10)) +
+  geom_hline(aes(yintercept = 0), linetype="dashed") +
+  ylab("Apparent activation energy (eV)")+
+  xlab("Kernel density") +
+  annotate(geom = "text", x=0.2, y = 7, label=expression('Ebullitive C'*H[4]), size=4) +
+  scale_y_continuous(breaks = seq(from = -5, to = 10, by = 1), limits = c(-5,10)) +
   theme_linedraw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), plot.margin = unit(c(0.1, 0.1, 1.3, 0.1), "cm"))
 
 
 L_tch4_t <- Lakedat2_filtered %>% 
@@ -285,17 +290,17 @@ L_tch4_t <- Lakedat2_filtered %>%
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 pds_tch4 <- site_Ea_tch4_L %>%
-  ggplot(aes(x=slope))+
+  ggplot(aes(y=slope))+
   geom_density(color="grey20", fill="#97A2A8", alpha=0.6) +
-  geom_vline(aes(xintercept = 0), linetype="dashed") +
-  xlab("Apparent activation energy (eV)")+
-  ylab("Kernel density") +
-  annotate(geom = "text", x=7, y = 0.35, label=expression('Total C'*H[4]), size=4) +
-  scale_x_continuous(breaks = seq(from = -5, to = 10, by = 1), limits = c(-5,10)) +
+  geom_hline(aes(yintercept = 0), linetype="dashed") +
+  ylab("Apparent activation energy (eV)")+
+  xlab("Kernel density") +
+  annotate(geom = "text", x=0.3, y = 7, label=expression('Total C'*H[4]), size=4) +
+  scale_y_continuous(breaks = seq(from = -5, to = 10, by = 1), limits = c(-5,10)) +
   theme_linedraw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), plot.margin = unit(c(-0.9, 0.1, 2.5, 0.1), "cm"))
 
-ggsave(paste(dir, 'Output', 'Figures', 'Figure_1.pdf', sep = '/'), ggarrange(ggarrange(L_dch4_t, L_ech4_t, L_tch4_t, ncol = 3, nrow = 1, common.legend = TRUE, legend="bottom", labels = c("a", "b", "c")) , ggarrange(pds_dch4, pds_ech4, pds_tch4, ncol = 3, nrow = 1, labels = c("d", "e", "f")),  ncol=1, nrow=2, heights = c(1,0.6), align = "h"), width = 11, height = 8)
+ggsave(paste(dir, 'Output', 'Figures', 'Figure_1.pdf', sep = '/'), ggarrange(ggarrange(L_dch4_t, L_ech4_t, L_tch4_t, ncol = 1, nrow = 3, common.legend = TRUE, legend="bottom", labels = c("a", "b", "c"), heights = c(0.85,0.81,0.92)) , ggarrange(pds_dch4, pds_ech4, pds_tch4, ncol = 1, nrow = 3, labels = c("d", "e", "f")),  ncol=2, nrow=1, widths = c(1,0.7), align = "hv"), width = 6, height = 11.5)
 
 ### Figure 2 ------
 ### define custom labels
