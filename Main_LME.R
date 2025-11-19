@@ -29,7 +29,7 @@ sapply(Lsites, class)
 sapply(Lconcs, class)
 sapply(Lfluxes, class)
 
-lconcflux <- left_join(Lconcs, Lfluxes, by=c("Source_ID", "Site_ID", "Site_Name", "Date_start", "Date_end","Month", "Season", "Year"), relationship = "many-to-many") %>% unique()
+lconcflux <- left_join(Lfluxes, Lconcs, by=c("Source_ID", "Site_ID", "Site_Name", "Date_start", "Date_end","Month", "Season", "Year"), relationship = "many-to-many") %>% unique()
 
 nrow(lconcflux) # 7161 rows
 #write_csv(lconcflux, "lconcflux.csv")
@@ -913,17 +913,17 @@ size_label <- as_labeller(c(small_pond="Area~'<'~'0.001'~km^2",
 ## dCH4
 
 line_data_d <- data.frame(sizeclass10 = c("small_pond", "medium_pond", "pond", "small_lake", "medium_lake", "lake"),
-                          slope = c(NA, NA, 0.325375825, 0.337634426, 0.834021964, 1.36356398),
-                          intercept = c(NA, NA, -0.468135251, -0.218908406, -0.784630772, -1.678811492))
+                          slope = c(NA, NA, 0.329720172, 0.337634426, 0.911334203, 1.363563989),
+                          intercept = c(NA, NA, -0.464885454, -0.223738928, -1.048972473, -1.698319938))
 
 text_d <- data.frame(sizeclass10 = c("small_pond", "medium_pond", "pond", "small_lake", "medium_lake", "lake"),
                      x = rep(0, 6),  # x position of the annotation, adjust as needed
                      y = rep(10000, 6),  # y position of the annotation, adjust as needed
                      label = c("atop(bar(E)[dM]*': Non-significant fit', 'n = 296, sites = 165, p = 0.15')",
                                "atop(bar(E)[dM]*': Non-significant fit', 'n = 564, sites = 145, p = 0.18')",
-                               "atop(bar(E)[dM]*' = 0.33 eV, 95% CI: 0.20 – 0.45', 'n = 705, sites = 131, p < 0.001')",
+                               "atop(bar(E)[dM]*' = 0.33 eV, 95% CI: 0.20 – 0.46', 'n = 706, sites = 132, p < 0.001')",
                                "atop(bar(E)[dM]*' = 0.34 eV, 95% CI: 0.18 – 0.49', 'n = 318, sites = 94, p < 0.001')",
-                               "atop(bar(E)[dM]*' = 0.83 eV, 95% CI: 0.55 – 1.12', 'n = 450, sites = 50, p < 0.001')",
+                               "atop(bar(E)[dM]*' = 0.91 eV, 95% CI: 0.63 – 1.19', 'n = 458, sites = 58, p < 0.001')",
                                "atop(bar(E)[dM]*' = 1.36 eV, 95% CI: 0.85 – 1.88', 'n = 123, sites = 41, p < 0.001')")
 )
 
@@ -948,19 +948,19 @@ p.dch4
 
 ## eCH4
 line_data_e <- data.frame(sizeclass10 = c("small_pond", "medium_pond", "pond", "small_lake", "medium_lake", "lake"),
-                          slope = c(0.282314704, 1.376305834, 1.982594157, 1.612528039, 2.361858522, NA),
-                          intercept = c(-1.625938889, 0.284279404, -0.504703791, -0.33474728, 1.194304702,NA))
+                          slope = c(0.282314704, 1.376305834, 1.98259416, 1.612527897, 2.361858522, NA),
+                          intercept = c(-1.629170468, 0.268525709, -0.527397288, -0.353204913, 1.167270004,NA))
 
 text_e <- data.frame(sizeclass10 = c("small_pond", "medium_pond", "pond", "small_lake", "medium_lake", "lake"),
-                     x = rep(0, 6),  # x position of the annotation, adjust as needed
-                     y = rep(10000, 6),  # y position of the annotation, adjust as needed
-                     label = c("atop(bar(E)[eM]*' = 0.28 eV, 95% CI: 0.00 – 0.57', 'n = 1008, sites = 13, p = 0.05')",
-                               "atop(bar(E)[eM]*' = 1.38 eV, 95% CI: 0.89 – 1.86', 'n = 93, sites = 8, p < 0.001')",
-                               "atop(bar(E)[eM]*' = 1.98 eV, 95% CI: 1.74 – 2.22', 'n = 853, sites = 32, p < 0.001')",
-                               "atop(bar(E)[eM]*' = 1.61 eV, 95% CI: 1.32 – 1.90', 'n = 364, sites = 18, p < 0.001')",
-                               "atop(bar(E)[eM]*' = 2.36 eV, 95% CI: 1.85 – 2.87', 'n = 19, sites = 11, p < 0.001')",
-                               "atop(bar(E)[eM]*': Non-significant fit', 'n = 23, sites = 3, p = 0.84')")
-)
+  x = rep(0, 6),  # x position of the annotation, adjust as needed
+  y = rep(10000, 6),  # y position of the annotation, adjust as needed
+  label = c("atop(bar(E)[eM]*' = 0.28 eV, 95% CI: 0.00 – 0.57', 'n = 1008, sites = 13, p = 0.05')",
+            "atop(bar(E)[eM]*' = 1.38 eV, 95% CI: 0.89 – 1.86', 'n = 93, sites = 24, p < 0.001')",
+            "atop(bar(E)[eM]*' = 1.98 eV, 95% CI: 1.74 – 2.22', 'n = 853, sites = 38, p < 0.001')",
+            "atop(bar(E)[eM]*' = 1.61 eV, 95% CI: 1.32 – 1.90', 'n = 364, sites = 18, p < 0.001')",
+            "atop(bar(E)[eM]*' = 2.36 eV, 95% CI: 1.85 – 2.87', 'n = 19, sites = 11, p < 0.001')",
+            "atop(bar(E)[eM]*': Non-significant fit', 'n = 18, sites = 2, p = 0.10')")
+  )
 
 
 p.ech4 <- Lakedat2_clean_e %>% 
@@ -987,3 +987,90 @@ top.grob <- textGrob(expression("Water temperature " ( degree*C)), gp=gpar(fontf
 
 
 ggsave(paste(dir, 'Output', 'Figures', 'lake size temp vs. log10 flux5-1.svg', sep = '/'), grid.arrange(arrangeGrob(plot, bottom = x.grob, top = top.grob)), device = "svg", width = 9.3, height = 13.5)
+
+# Figure 3: Depth group plot ------
+
+depth_label <- as_labeller(c(depth_1="Max~Depth~'<'~'1'~m", 
+                             depth_1_5="'1'~m~'\u2264'~Max~Depth~'<'~5~m", 
+                             depth_5_15="5~m~'\u2264'~Max~Depth~'<'~15~m", 
+                             depth_15="Max~Depth~'\u2265'~15~m"),
+                           default = label_parsed)
+## dCH4
+
+line_data_d2 <- data.frame(depthclass = c("depth_1", "depth_1_5", "depth_5_15", "depth_15"),
+                           slope = c(0.5385765,
+                                     0.2874308,
+                                     0.8499357,
+                                     0.9795008),
+                           intercept = c(-2.3311230,
+                                         -1.0087771,
+                                         -0.5114217,
+                                         -1.3977690))
+
+text_d2 <- data.frame(depthclass = c("depth_1", "depth_1_5", "depth_5_15", "depth_15"),
+                      x = rep(0, 4),  # x position of the annotation, adjust as needed
+                      y = rep(4000, 4),  # y position of the annotation, adjust as needed
+                      label = c("atop(bar(E)[dM]*' = 0.54 eV, 95% CI: 0.07 – 1.01', 'n = 90, sites = 23, p = 0.02')",
+                                "atop(bar(E)[dM]*' = 0.29 eV, 95% CI: 0.16 – 0.41', 'n = 829, sites = 114, p < 0.001')",
+                                "atop(bar(E)[dM]*' = 0.85 eV, 95% CI: 0.64 – 1.06', 'n = 592, sites = 76, p < 0.001')",
+                                "atop(bar(E)[dM]*' = 0.98 eV, 95% CI: 0.71 – 1.25', 'n = 290, sites = 53, p < 0.001')")
+)
+
+
+p.dch4_depth <- Lakedat2_clean_d %>%
+  drop_na(depthclass) %>% 
+  ggplot()+
+  facet_wrap(~factor(depthclass, c("depth_1", "depth_1_5", "depth_5_15", "depth_15")), scales = "free_y", strip.position = "top", labeller = depth_label, nrow=4, ncol=1, dir="h") +
+  geom_point(aes(x = ikt, y = Diff_CH4_mmolm2d), color="#f0be89", size = 2, alpha = .5)+
+  #geom_smooth(method= "lm", color="grey20", se= FALSE)+
+  geom_abline(data = line_data_d2, aes(slope = slope, intercept = intercept))+
+  scale_x_continuous(name= expression(paste("Standardized temperature ", bgroup("(", frac(1, kT[C]) - frac(1, kT), ")" ))), limits= c(-2, 2), sec.axis = sec_axis(~ (273.15*k* . + 0.0417807)/(0.00350803 - k* . ), name =expression("Water temperature " ( degree*C)), breaks = seq(-5, 30, by=5)))+ 
+  scale_y_continuous(trans= "log", breaks = c(.0001, .001, .01, .1, 1, 10, 100), labels=expression(10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2),name= expression('Diffusive C'*H[4]*' flux (mmol '*m^-2*' '*d^-1*')'), limits = c(0.0001, 15000))+
+  geom_label(data = text_d2, aes(x = x, y = y, label = label), parse = TRUE, size=3, label.size = NA) +
+  #geom_richtext(data = text_e, aes(x = x, y = y, label = label), size=3, label.color = NA) +
+  theme_linedraw() +
+  theme(strip.background =element_rect(fill="grey90"), strip.text = element_text(color = "black"), legend.position = "none", axis.title.x=element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p.dch4_depth
+
+
+## eCH4
+line_data_e2 <- data.frame(depthclass = c("depth_1", "depth_1_5", "depth_5_15", "depth_15"),
+                           slope = c(NA, 1.5349982,
+                                     2.1616396,
+                                     2.1917711),
+                           intercept = c(NA, -0.5855021,
+                                         0.5868126,
+                                         -0.9549375))
+
+text_e2 <- data.frame(depthclass = c("depth_1", "depth_1_5", "depth_5_15", "depth_15"),
+                      x = rep(0, 4),  # x position of the annotation, adjust as needed
+                      y = rep(4000, 4),  # y position of the annotation, adjust as needed
+                      label = c("atop(bar(E)[eM]*': Non-significant fit','n = 37, sites = 13, p = 0.48')",
+                                "atop(bar(E)[eM]*' = 1.53 eV, 95% CI: 1.30 – 1.77', 'n = 482, sites = 45, p < 0.001')",
+                                "atop(bar(E)[eM]*' = 2.16 eV, 95% CI: 1.91 – 2.41', 'n = 823, sites = 27, p < 0.001')",
+                                "atop(bar(E)[eM]*' = 2.19 eV, 95% CI: 0.82 – 3.56', 'n = 12, sites = 6, p = 0.009')")
+)
+
+p.ech4_depth <- Lakedat2_clean_e %>% 
+  drop_na(depthclass) %>% 
+  ggplot()+
+  facet_wrap(~factor(depthclass, c("depth_1", "depth_1_5", "depth_5_15", "depth_15")), scales = "free_y", strip.position = "top", labeller = depth_label, nrow=4, ncol=1, dir="h") +
+  geom_point(aes(x = ikt, y = Eb_CH4_mmolm2d), color="#3d85c6",  size = 2, alpha = .5)+
+  #geom_smooth(method= "lm", color="grey20", se= FALSE)+
+  geom_abline(data = line_data_e2, aes(slope = slope, intercept = intercept))+
+  scale_x_continuous(name= expression(paste("Standardized temperature ", bgroup("(", frac(1, kT[C]) - frac(1, kT), ")" ))), limits= c(-2, 2), sec.axis = sec_axis(~ (273.15*k* . + 0.0417807)/(0.00350803 - k* . ), name =expression("Water temperature " ( degree*C)), breaks = seq(-5, 30, by=5)))+ 
+  scale_y_continuous(trans= "log", breaks = c(.0001, .001, .01, .1, 1, 10, 100), labels=expression(10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2),
+                     name= expression('Ebullitive C'*H[4]*' flux (mmol '*m^-2*' '*d^-1*')'), limits = c(0.0001, 15000))+
+  geom_label(data = text_e2, aes(x = x, y = y, label = label), parse = TRUE, size=3, label.size = NA) +
+  #geom_richtext(data = text_e, aes(x = x, y = y, label = label), size=3, label.color = NA) +
+  theme_linedraw() +
+  theme(strip.background =element_rect(fill="grey90"), strip.text = element_text(color = "black"), legend.position = "none", axis.title.x=element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+p.ech4_depth
+
+
+plot <- plot_grid(p.dch4_depth, p.ech4_depth, ncol=2, align = 'v', labels = "auto" ) + theme(plot.margin = unit(c(0, 0, 0, 0), "pt"))
+x.grob <- textGrob(expression(paste("Standardized temperature ", bgroup("(", frac(1, kT[C]) - frac(1, kT), ")" ), " (eV"^-1,")")), gp=gpar(fontface="bold",  fontsize=12))
+top.grob <- textGrob(expression("Water temperature " ( degree*C)), gp=gpar(fontface="bold",  fontsize=12))
+
+
+ggsave(paste(dir, 'Output', 'Figures', 'lake depth temp vs. log10 flux-4.svg', sep = '/'), grid.arrange(arrangeGrob(plot, bottom = x.grob, top = top.grob)), device = "svg", width = 5.5, height = 10)
