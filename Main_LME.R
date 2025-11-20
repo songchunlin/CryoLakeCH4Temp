@@ -14,13 +14,13 @@ site_id_issue # 0 lines means no issues
 latlon_issue <- Lsites %>% group_by(Latitude, Longitude) %>% filter(n_distinct(Site_ID) > 1) %>% ungroup() # check if there are multiple site_id for the same lat/lon
 latlon_issue # 0 lines means no issues
 
-length(unique(Lsites$Site_ID)) # 1465
+length(unique(Lsites$Site_ID)) 
 Lconcs <- read_excel(paste(dir,'Data','CryoLake25.xlsx',sep = '/'), sheet = 'Concentrations',  col_types = c("numeric", "numeric", "text", "text", "date", "date", "text","text", "text", "text","text","text","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","text","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","text","text","text","text"))
 Lconcs <- Lconcs %>% group_by(across(1:9)) %>% summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)), .groups = "drop") # average data from same day and same lake
-nrow(Lconcs) # 6981 rows
+nrow(Lconcs) 
 Lfluxes <- read_excel(paste(dir,'Data','CryoLake25.xlsx',sep = '/'), sheet = 'Fluxes', guess_max=8000) 
 Lfluxes <- Lfluxes %>% group_by(across(1:9)) %>% summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)), .groups = "drop") # average data from same day and same lake
-nrow(Lfluxes) # 6793 rows
+nrow(Lfluxes) 
 
 head(Lsites)
 head(Lconcs)
@@ -31,7 +31,7 @@ sapply(Lfluxes, class)
 
 lconcflux <- left_join(Lfluxes, Lconcs, by=c("Source_ID", "Site_ID", "Site_Name", "Date_start", "Date_end","Month", "Season", "Year"), relationship = "many-to-many") %>% unique()
 
-nrow(lconcflux) # 7161 rows
+nrow(lconcflux) 
 #write_csv(lconcflux, "lconcflux.csv")
 
 Lakedat <- left_join(lconcflux, Lsites, by=c("Source_ID", "Site_ID", "Site_Name"),  relationship = "many-to-many") 
@@ -157,7 +157,7 @@ Lakedat_by_sites2 <-
     MAT = mean(MAT, na.rm = TRUE),
     MAP = mean(MAP, na.rm = TRUE)
   )
-nrow(Lakedat_by_sites2) # 1466
+nrow(Lakedat_by_sites2) 
 #write_csv(Lakedat_by_sites2, "Lakedat_by_sites2.csv")
 
 # Test for spatial autocorrelation------
